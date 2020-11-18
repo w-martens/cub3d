@@ -6,7 +6,7 @@
 /*   By: y4k_wm <y4k_wm@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/11 15:18:24 by y4k_wm        #+#    #+#                 */
-/*   Updated: 2020/11/18 17:19:23 by y4k_wm        ########   odam.nl         */
+/*   Updated: 2020/11/18 18:15:07 by y4k_wm        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	main(void)
 	t_cub3 c_struct;
 
 	init_struct(&c_struct);
-	parse_map("map.txt", &c_struct);
+	parser("map.txt", &c_struct);
 	print_map(&c_struct);
 
 	// int i;

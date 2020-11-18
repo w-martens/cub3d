@@ -6,7 +6,7 @@
 /*   By: y4k_wm <y4k_wm@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/11 14:58:15 by y4k_wm        #+#    #+#                 */
-/*   Updated: 2020/11/18 18:06:01 by y4k_wm        ########   odam.nl         */
+/*   Updated: 2020/11/18 18:23:31 by y4k_wm        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,29 @@ int m_len(char *mapfile)
 	return (i);
 }
 
-void parse_map(char *mapfile, t_cub3 *c_struct)
+void	parse_map(int fd, char *line, char *mapfile, t_cub3 *c_struct)
 {
-	int fd;
-	char *line;
-	char **args;
 	int i;
 
 	i = 0;
-	char *map;
+	c_struct->map = (char**)malloc(sizeof(char *) * m_len(mapfile));
+	while (get_next_line(fd, &line))
+	{
+		if (line)
+			c_struct->map[i] = ft_strdup(line);
+		i++;
+		if (*line == '\n')
+			break ;
+		free(line);
+	}
+	free(line);
+}
+
+void	parser(char *mapfile, t_cub3 *c_struct)
+{
+	int		fd;
+	char	*line;
+	char	**args;
 
 	fd = open(mapfile, O_RDONLY);
 	while (get_next_line(fd, &line))
@@ -126,15 +140,5 @@ void parse_map(char *mapfile, t_cub3 *c_struct)
 		freeloop(args);
 	}
 	freeloop(args);
-	c_struct->map = (char**)malloc(sizeof(char *) * m_len(mapfile));
-	while (get_next_line(fd, &line))
-	{
-		if (line)
-			c_struct->map[i] = ft_strdup(line);
-		i++;
-		if (*line == '\n')
-			break ;
-		free(line);
-	}
-	free(line);
+	parse_map(fd, line, mapfile, c_struct);
 }
