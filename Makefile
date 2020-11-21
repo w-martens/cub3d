@@ -6,7 +6,7 @@
 #    By: y4k_wm <y4k_wm@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/11 15:47:01 by y4k_wm        #+#    #+#                  #
-#    Updated: 2020/11/20 15:34:53 by y4k_wm        ########   odam.nl          #
+#    Updated: 2020/11/21 15:06:12 by y4k_wm        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,11 +26,17 @@ OBJ = $(SRC:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	make -C $(MLX_DIR)
-	make -C $(UTILS)
-	$(CC) $^ ./utils/utils.a -lbsd -lmlx -lXext -lX11 -o $(NAME)			
-
+ifeq ($(shell uname), Linux)
+	$(NAME): $(OBJ)
+		make -C $(MLX_DIR)
+		make -C $(UTILS)
+		$(CC) $^ ./utils/utils.a -lbsd -lmlx -lXext -lX11 -o $(NAME)
+else	
+	$(NAME): $(OBJ)
+		make -C $(MLX_DIR)
+		make -C $(UTILS)
+		$(CC) $^ ./utils/utils.a -lbsd -lmlx -lXext -lX11 -o $(NAME)
+endif
 %.o: %.c
 	$(CC) -c $< -o $@
 
