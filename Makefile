@@ -6,14 +6,14 @@
 #    By: y4k_wm <y4k_wm@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/11 15:47:01 by y4k_wm        #+#    #+#                  #
-#    Updated: 2020/11/11 17:02:38 by y4k_wm        ########   odam.nl          #
+#    Updated: 2020/11/20 15:34:53 by y4k_wm        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
 CC = gcc
-# MLX_DIR = ./mlx
+MLX_DIR = ./mlx
 UTILS = ./utils
 
 
@@ -27,8 +27,9 @@ OBJ = $(SRC:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
+	make -C $(MLX_DIR)
 	make -C $(UTILS)
-	$(CC) $^ ./utils/utils.a -o $(NAME)			
+	$(CC) $^ ./utils/utils.a -lbsd -lmlx -lXext -lX11 -o $(NAME)			
 
 %.o: %.c
 	$(CC) -c $< -o $@

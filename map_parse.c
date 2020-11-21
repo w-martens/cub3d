@@ -6,7 +6,7 @@
 /*   By: y4k_wm <y4k_wm@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/11 14:58:15 by y4k_wm        #+#    #+#                 */
-/*   Updated: 2020/11/18 18:23:31 by y4k_wm        ########   odam.nl         */
+/*   Updated: 2020/11/20 15:01:12 by y4k_wm        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ void store_resource(char **args, t_cub3 *c_struct)
 		store_rgb(args, c_struct);
 }
 
-int m_len(char *mapfile)
+int	m_len(char *mapfile)
 {
-	int i;
-	int fd;
-	char buf[1];
+	int		i;
+	int		fd;
+	char	buf[1];
 
 	i = 0;
 	fd = open(mapfile, O_RDONLY);
