@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   testrainbow.c                                      :+:    :+:            */
+/*   test2.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: y4k_wm <y4k_wm@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/11 15:18:24 by y4k_wm        #+#    #+#                 */
-/*   Updated: 2021/02/02 13:37:59 by wmartens      ########   odam.nl         */
+/*   Updated: 2021/02/02 15:02:22 by wmartens      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "./mlx/mlx.h"
+#include <stdio.h>
 
 void	print_map(t_cub3 *c_struct)
 {
@@ -74,101 +75,74 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-int		create_trgb(int t, int r, int g, int b)
+int	create_trgb(int t, int r, int g, int b)
 {
-	return(t << 24 | r << 16 | g << 8 | b);
+	return (t << 24 | r << 16 | g << 8 | b);
 }
 
-void rainbow(t_data	*img)
+typedef	struct	s_vars
 {
-	int color;
-	int i;
-	int j;
+	void	*mlx;
+	void	*win;
+	int		*keycode;
+}				t_vars;
 
-	int r;
-	int g;
-	int b;
+int	key_hook(int keycode, t_vars *vars)
+{
+	printf("%i, \n", keycode);
+	vars->keycode = keycode;
+    return (keycode);
+}
 
-	int x;
-
-	i = 5;
-	j = 5;
-	r = 255;
-	g = 0;
-	b = 0;
-
-	while (i < 1920)
+void square(t_data *img, void *mlx, void *mlx_win)
+{
+	int x = 10;
+	int y = 10;
+	int color = create_trgb(0, 255, 0, 0);
+	img->img = mlx_new_image(mlx, 640, 480);
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
+	while(x < 50)
 	{
-		while (j < 1080)
-		{
-		color = create_trgb(0, r, g, b);
-		my_mlx_pixel_put(img, i, j, color);
-		j++;
-		}
-		j = 5;
-		if ((g < 255) && (b != 255))
-			g++;
-		if ((g == 255) && (r > 0))
-			r--;
-		if ((r == 0) && (b < 255))
-			b++;
-		if ((b == 255) && (b > 0))
-			g--;
-		i++;
-		i++;
-		while (j < 1080)
-		{
-		color = create_trgb(0, r, g, b);
-		my_mlx_pixel_put(img, i, j, color);
-		j++;
-		j++;
-		}
+		my_mlx_pixel_put(img, x, y, color);
+		x++;
 	}
+	x = 10;
+	while(y < 50)
+	{
+		my_mlx_pixel_put(img, x, y, color);
+		my_mlx_pixel_put(img, (x + 40), y, color);
+		y++;
+	}
+	x = 10;
+	while(x < 50)
+	{
+		my_mlx_pixel_put(img, x, y, color);
+		x++;
+	}
+	mlx_put_image_to_window(mlx, mlx_win, img->img, 0, 0);
 }
+// links 123
+// rechts 124
+// boven 126
+// beneden 125
 
 int	main(void)
 {
-	t_cub3	c_struct;
-	t_data	img;
-	t_data	img2;
-	// init_struct(&c_struct);
-	// parser("map.txt", &c_struct);
-	// print_map(&c_struct);
-
-	// int i;
-
-	// i = 0;
-	// while (*c_struct.map[i] != NULL)
-	// {
-	// 	free(*c_struct.map[i]);
-	// 	i++;
-	// }
-
+	t_vars	vars;
+	t_data		img;
+	t_data		img2;
+	int		keycode;
 	void	*mlx;
 	void	*mlx_win;
-	int		i;
-	int		j;
-	int		l;
-	int color;
-	i = 1;
-	j = 1;
-	l = 0;
+    mlx = mlx_init();
+    mlx_win = mlx_new_window(mlx, 640, 480, "Hello world!");
+	// img.img = mlx_new_image(mlx, 640, 480);
+	// img2.img = mlx_new_image(mlx, 640, 480);
+	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	// img2.addr = mlx_get_data_addr(img2.img, &img2.bits_per_pixel, &img2.line_length, &img2.endian);
 
-	color = 0;
+	square(&img, mlx, mlx_win);
+    // mlx_key_hook(vars.win, key_hook, &vars);
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	img.img = mlx_new_image(mlx, 1920, 1080);
-	img2.img = mlx_new_image(mlx, 1920, 1080);
-
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	img2.addr = mlx_get_data_addr(img2.img, &img2.bits_per_pixel, &img2.line_length, &img2.endian);
-
-	rainbow(&img);
-
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
-
-	// free_struct(&c_struct);
-	return (0);
+    mlx_loop(mlx);
 }
