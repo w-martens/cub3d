@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   test2.c                                            :+:    :+:            */
+/*   test.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: y4k_wm <y4k_wm@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/11 15:18:24 by y4k_wm        #+#    #+#                 */
-/*   Updated: 2021/02/02 15:02:22 by wmartens      ########   odam.nl         */
+/*   Updated: 2021/02/04 14:54:19 by wmartens      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "./mlx/mlx.h"
 #include <stdio.h>
-
 void	print_map(t_cub3 *c_struct)
 {
 	int i;
@@ -36,19 +35,6 @@ void	print_map(t_cub3 *c_struct)
 	}
 }
 
-// void freeloop1(char **args)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (*args[i] != NULL)
-// 	{
-// 		free(*args[i]);
-// 		i++;
-// 	}
-// 	free(*args);
-// }
-
 void	free_struct(t_cub3 *c_struct)
 {
 	int i;
@@ -69,80 +55,81 @@ void	free_struct(t_cub3 *c_struct)
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
-    char    *dst;
+    char	*dst;
 
     dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
     *(unsigned int*)dst = color;
 }
 
-int	create_trgb(int t, int r, int g, int b)
+int		create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 
-typedef	struct	s_vars
-{
-	void	*mlx;
-	void	*win;
-	int		*keycode;
-}				t_vars;
-
-int	key_hook(int keycode, t_vars *vars)
-{
-	printf("%i, \n", keycode);
-	vars->keycode = keycode;
-    return (keycode);
-}
+typedef struct  s_vars {
+    void	*mlx;
+    void	*win;
+	t_data		img;
+	int mousex;
+	int mousey;
+}               t_vars;
 
 void square(t_data *img, void *mlx, void *mlx_win)
 {
-	int x = 10;
-	int y = 10;
+	int x;
+	int y;
 	int color = create_trgb(0, 255, 0, 0);
-	img->img = mlx_new_image(mlx, 640, 480);
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-	while(x < 50)
+	x = 10;
+	y = 10;
+	while (x < 50)
 	{
 		my_mlx_pixel_put(img, x, y, color);
 		x++;
 	}
-	x = 10;
-	while(y < 50)
+	x -= 50;
+	while (y < 50)
 	{
 		my_mlx_pixel_put(img, x, y, color);
 		my_mlx_pixel_put(img, (x + 40), y, color);
 		y++;
 	}
-	x = 10;
-	while(x < 50)
+	while (x < 50)
 	{
 		my_mlx_pixel_put(img, x, y, color);
 		x++;
 	}
-	mlx_put_image_to_window(mlx, mlx_win, img->img, 0, 0);
+	mlx_put_image_to_window(&mlx, &mlx_win, &img->img, 0, 0);
 }
-// links 123
-// rechts 124
-// boven 126
-// beneden 125
+
+int	mouse_hook(int button, int x, int y, t_vars *vars)
+{
+    printf("%i,\t%i\n", x, y);
+	vars->mousex = x;
+	vars->mousey = y;
+	return(button);
+}
+
+int hellow(t_vars *vars)
+{
+	if((vars->mousex > 0) || (vars->mousey > 0))
+	{
+		printf("hellow");
+		vars->mousex = 0;
+		vars->mousey = 0;
+	}
+	return(0);
+}
 
 int	main(void)
 {
-	t_vars	vars;
-	t_data		img;
-	t_data		img2;
-	int		keycode;
-	void	*mlx;
-	void	*mlx_win;
-    mlx = mlx_init();
-    mlx_win = mlx_new_window(mlx, 640, 480, "Hello world!");
-	// img.img = mlx_new_image(mlx, 640, 480);
-	// img2.img = mlx_new_image(mlx, 640, 480);
-	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	// img2.addr = mlx_get_data_addr(img2.img, &img2.bits_per_pixel, &img2.line_length, &img2.endian);
-
-	square(&img, mlx, mlx_win);
-    // mlx_key_hook(vars.win, key_hook, &vars);
-
-    mlx_loop(mlx);
+    t_vars	vars;
+	t_data	img;
+    vars.mlx = mlx_init();
+    vars.win = mlx_new_window(vars.mlx, 640, 480, "Hello world!");
+	img.img = mlx_new_image(vars.mlx, 640, 480);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	// square(&img, vars.mlx, vars.win);
+    mlx_mouse_hook(vars.win, mouse_hook, &vars);
+	mlx_loop_hook(vars.mlx, hellow, &vars);
+    mlx_loop(vars.mlx);
 }
