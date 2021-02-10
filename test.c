@@ -6,7 +6,7 @@
 /*   By: y4k_wm <y4k_wm@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/11 15:18:24 by y4k_wm        #+#    #+#                 */
-/*   Updated: 2021/02/04 15:32:11 by wmartens      ########   odam.nl         */
+/*   Updated: 2021/02/10 15:37:36 by wmartens      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,14 @@ typedef	struct	s_vars
 	t_data		img;
 	int mousex;
 	int mousey;		
+	int i;
 }				t_vars;
 
 int	key_hook(int keycode, t_vars *vars)
 {
-	printf("%i, \n", keycode);
-    return (keycode);
+	int i;
+	i = 0;
+	return (keycode);
 }
 
 void square(t_data *img, void *mlx, void *mlx_win, t_vars *vars)
@@ -108,6 +110,7 @@ void square(t_data *img, void *mlx, void *mlx_win, t_vars *vars)
 		my_mlx_pixel_put(img, x, y, color);
 		x++;
 	}
+	mlx_put_image_to_window(mlx, mlx_win, img->img, 0, 0); 
 	x = vars->mousex;
 	while (y < (vars->mousey + 50))
 	{
@@ -146,21 +149,37 @@ int squareprint(t_vars *vars)
 	}
 	return(0);
 }
+
+int	winclose(int keycode, t_vars *vars)
+{
+	if (keycode == 53)
+	{
+    	mlx_destroy_window(vars->mlx, vars->win);
+	}
+}
+
+int rainbowdr(t_vars *vars)
+{
+
+}
+
 int	main(void)
 {
 	t_vars	vars;
-
     vars.mlx = mlx_init();
     vars.win = mlx_new_window(vars.mlx, 640, 480, "Hello world!");
 	vars.img.img = mlx_new_image(vars.mlx, 640, 480);
-	// img2.img = mlx_new_image(mlx, 640, 480);
 	vars.img.addr = mlx_get_data_addr(vars.img.img, &vars.img.bits_per_pixel, &vars.img.line_length, &vars.img.endian);
-	// img2.addr = mlx_get_data_addr(img2.img, &img2.bits_per_pixel, &img2.line_length, &img2.endian);
 
     // mlx_key_hook(vars.win, key_hook, &vars);
 	vars.mousex = 0;
 	vars.mousey = 0;
+	vars.i = 0;
+	// square(&vars.img, vars.mlx, vars.win, &vars);
     mlx_mouse_hook(vars.win, mouse_hook, &vars);
-	mlx_loop_hook(vars.mlx, squareprint, &vars);
+	// mlx_key_hook(vars.win, key_hook, &vars);
+	mlx_hook(vars.win, 2, 1L<<0, winclose, &vars);
+	// mlx_loop_hook(vars.mlx, squareprint, &vars);
+	mlx_loop_hook(vars.mlx, rainbowdr, &vars);
     mlx_loop(vars.mlx);
 }
