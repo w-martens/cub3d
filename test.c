@@ -6,7 +6,7 @@
 /*   By: y4k_wm <y4k_wm@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/11 15:18:24 by y4k_wm        #+#    #+#                 */
-/*   Updated: 2021/02/10 15:37:36 by wmartens      ########   odam.nl         */
+/*   Updated: 2021/02/10 16:13:03 by wmartens      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,9 +158,15 @@ int	winclose(int keycode, t_vars *vars)
 	}
 }
 
+int rainbow
+{
+	mlx_put_image_to_window(mlx, mlx_win, img->img, 0, 0);
+}
+
 int rainbowdr(t_vars *vars)
 {
-
+ 	vars->i++;
+	
 }
 
 int	main(void)
