@@ -6,7 +6,7 @@
 /*   By: y4k_wm <y4k_wm@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/11 15:18:24 by y4k_wm        #+#    #+#                 */
-/*   Updated: 2021/02/10 16:13:03 by wmartens      ########   odam.nl         */
+/*   Updated: 2021/02/11 14:19:12 by wmartens      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,17 +158,6 @@ int	winclose(int keycode, t_vars *vars)
 	}
 }
 
-int rainbow
-{
-	mlx_put_image_to_window(mlx, mlx_win, img->img, 0, 0);
-}
-
-int rainbowdr(t_vars *vars)
-{
- 	vars->i++;
-	
-}
-
 int	main(void)
 {
 	t_vars	vars;
@@ -185,7 +174,6 @@ int	main(void)
     mlx_mouse_hook(vars.win, mouse_hook, &vars);
 	// mlx_key_hook(vars.win, key_hook, &vars);
 	mlx_hook(vars.win, 2, 1L<<0, winclose, &vars);
-	// mlx_loop_hook(vars.mlx, squareprint, &vars);
-	mlx_loop_hook(vars.mlx, rainbowdr, &vars);
+	mlx_loop_hook(vars.mlx, squareprint, &vars);
     mlx_loop(vars.mlx);
 }
