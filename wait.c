@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   test.c                                             :+:    :+:            */
+/*   wait.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wmartens <wmartens@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 11:48:33 by wmartens      #+#    #+#                 */
-/*   Updated: 2021/02/17 13:43:47 by wmartens      ########   odam.nl         */
+/*   Updated: 2021/02/17 14:12:41 by wmartens      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,30 +71,22 @@ int raycast(t_vars *mlx, t_rays *rays)
  	  cameraX = 2 * x / double(w) - 1; //x-coordinate in camera space
       double rayDirX = dirX + planeX * cameraX;
       double rayDirY = dirY + planeY * cameraX;		
-	
-      //which box of the map we're in
-      int mapX = int(posX);
-      int mapY = int(posY);
-
-      //length of ray from current position to next x or y-side
-      double sideDistX;
-      double sideDistY;
-
-       //length of ray from one x or y-side to next x or y-side
-      double deltaDistX = std::abs(1 / rayDirX);
-      double deltaDistY = std::abs(1 / rayDirY);
-      double perpWallDist;
-
-      //what direction to step in x or y-direction (either +1 or -1)
-      int stepX;
-      int stepY;
-
-      int hit = 0; //was there a wall hit?
-      int side; //was a NS or a EW wall hit?	
 	}
 }
 
+typedef struct s_rays
+{
+	double camera_x;
+	double raydir_x;
+	double raydir_y;
+	double dir_x;
+	double dir_y;
+	double plane_x;
+	double plane_y;
+	double pos_x
+	double pos_y;
 
+}			t_rays;
 
 int	main(int argc, char *argv[])
 {
