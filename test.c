@@ -6,7 +6,7 @@
 /*   By: wmartens <wmartens@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/17 11:48:33 by wmartens      #+#    #+#                 */
-/*   Updated: 2021/02/17 13:43:47 by wmartens      ########   odam.nl         */
+/*   Updated: 2021/02/23 15:38:34 by wmartens      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,15 @@ typedef	struct	s_vars
 	int		*keycode;
 	t_data		img;
 }				t_vars;
+
+typedef	struct	s_rays
+{
+	int		pos_x;
+	int		pos_y;
+	int		dir_y =
+	int		plane_x
+	int		plane_y
+}				t_rays;
 
 int raycast(t_vars *mlx, t_rays *rays)
 {
