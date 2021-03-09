@@ -1,17 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   c_struct.h                                         :+:    :+:            */
+/*   config.h                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: y4k_wm <y4k_wm@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/11 14:29:32 by y4k_wm        #+#    #+#                 */
-/*   Updated: 2020/12/10 15:00:33 by wmartens      ########   odam.nl         */
+/*   Updated: 2021/03/09 18:27:27 by wmartens      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBEMAIN_H
-# define CUBEMAIN_H
+#ifndef CONFIG_H
+# define CONFIG_H
+
+# include "utils/utils.h"
+# include <fcntl.h>
+# include <stdio.h>
+# include <math.h>
 
 typedef	struct	s_cub3
 {
@@ -27,13 +32,8 @@ typedef	struct	s_cub3
 	char	**map;
 }				t_cub3;
 
-typedef struct	s_data
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
+void	init_struct(t_cub3 *c_struct);
+void	parser(char *map, t_cub3 *c_struct);
+void	parse_map(int fd, char *line, char *mapfile, t_cub3 *c_struct);
 
 #endif

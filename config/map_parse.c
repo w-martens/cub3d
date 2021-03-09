@@ -6,11 +6,11 @@
 /*   By: y4k_wm <y4k_wm@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/11 14:58:15 by y4k_wm        #+#    #+#                 */
-/*   Updated: 2020/11/20 15:01:12 by y4k_wm        ########   odam.nl         */
+/*   Updated: 2021/03/09 18:26:13 by wmartens      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "config.h"
 
 // make floor R G B and fill it in store_resource
 

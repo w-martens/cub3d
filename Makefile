@@ -6,7 +6,7 @@
 #    By: y4k_wm <y4k_wm@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/11 15:47:01 by y4k_wm        #+#    #+#                  #
-#    Updated: 2020/12/03 22:16:40 by wmartens      ########   odam.nl          #
+#    Updated: 2021/03/09 18:25:42 by wmartens      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ MLX_OSX = ./mlx
 UTILS = ./utils
 
 
-SRC =	map_parse.c\
+SRC =	config/map_parse.c\
 		test.c\
 
 OBJ = $(SRC:%.c=%.o)
